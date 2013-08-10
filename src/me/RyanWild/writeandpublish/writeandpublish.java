@@ -8,10 +8,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.logging.Logger;
-
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -30,6 +28,7 @@ public class writeandpublish extends JavaPlugin {
 	    public static Economy econ = null;
 
 	    
+          @Override
 	  public void onEnable()
 	  {
 	    this.log = getServer().getLogger();
@@ -70,7 +69,6 @@ public class writeandpublish extends JavaPlugin {
 	    }
 	    catch (IOException e)
 	    {
-	      e.printStackTrace();
 	    }
 
 	    InputStream is = getClass().getResourceAsStream("/" + source);
@@ -83,7 +81,6 @@ public class writeandpublish extends JavaPlugin {
 	    }
 	    catch (FileNotFoundException e1)
 	    {
-	      e1.printStackTrace();
 	    }
 
 	    byte[] inByte = new byte[4096];
@@ -98,7 +95,6 @@ public class writeandpublish extends JavaPlugin {
 	    }
 	    catch (IOException e)
 	    {
-	      e.printStackTrace();
 	    }
 
 	    try
@@ -107,7 +103,6 @@ public class writeandpublish extends JavaPlugin {
 	    }
 	    catch (IOException e)
 	    {
-	      e.printStackTrace();
 	    }
 	    try
 	    {
@@ -115,10 +110,10 @@ public class writeandpublish extends JavaPlugin {
 	    }
 	    catch (IOException e)
 	    {
-	      e.printStackTrace();
 	    }
 	  }
 
+          @Override
 	public void onDisable()
 	  {
 	    this.log.info("[Write & Publish] Write & Publish is disabled.");
@@ -142,6 +137,7 @@ public class writeandpublish extends JavaPlugin {
 	    }
 	      
 	  
+          @Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
 	  {
 		if (sender instanceof Player) 
@@ -326,7 +322,8 @@ public class writeandpublish extends JavaPlugin {
 	  private String[] listBooks()
 	  {
 	    File folder = new File(getDataFolder().getPath() + File.separatorChar + "books");
-	    File[] files = folder.listFiles();
+	    File[] files;
+              files = folder.listFiles();
 	    String[] books = new String[files.length];
 	    for (int i = 0; i < files.length; i++)
 	    {
@@ -352,21 +349,18 @@ public class writeandpublish extends JavaPlugin {
 
 			    catch (InvalidConfigurationException e)
 			    {
-			      e.printStackTrace();
 			    }
 			    catch (FileNotFoundException e) {
-       	        e.printStackTrace();
 			    }
 			    catch (IOException e) {
-			      e.printStackTrace();
 			    }
 
 	  }
       private String remove(String line)
       {
                   String temp = line;
-                  temp.replaceAll("'", "");
-                  temp.replaceAll("\"", "");
+              String replaceAll = temp.replaceAll("'", "");
+              String replaceAll1 = temp.replaceAll("\"", "");
 
              return temp;
       }
