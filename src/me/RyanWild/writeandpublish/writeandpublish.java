@@ -24,7 +24,7 @@ import org.mcstats.Metrics;
 public class writeandpublish extends JavaPlugin
 {
 
-    private Logger log;
+    public static final Logger logger = Logger.getLogger("Minecraft-Server");
     private final writeandpublishbookwriter writer = new writeandpublishbookwriter(this);
     public static Economy econ = null;
 
@@ -40,25 +40,23 @@ public class writeandpublish extends JavaPlugin
         {
             // Failed to submit the stats :-(
         }
-        
-        this.log = getServer().getLogger();
 
         if (!setupEconomy())
         {
-            log.severe(String.format("[Write & Publish] - Disabled due to no Vault dependency found!", getDescription().getName()));
+            writeandpublish.logger.severe(String.format("[Write & Publish] - Disabled due to no Vault dependency found!", getDescription().getName()));
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
         
         else
         {
-            this.log.info("[Write & Publish] Write & Publish is hooked with Vault, economic functions are enabled.");
+            writeandpublish.logger.info("[Write & Publish] Write & Publish is hooked with Vault, economic functions are enabled.");
         }
 
         File configFile = new File(getDataFolder().getPath() + File.separatorChar + "config.yml");
         if (!configFile.exists())
         {
-            this.log.info("[Write & Publish] There was no config.yml found, it will be created now.");
+            writeandpublish.logger.info("[Write & Publish] There was no config.yml found, it will be created now.");
             saveDefaultConfig();
         }
 
@@ -67,9 +65,9 @@ public class writeandpublish extends JavaPlugin
         {
             createExample(exampleFile, "example.txt");
         }
-        this.log.info("[Write & Publish] Write & Publish is enabled!");
-        this.log.info("[Write & Publish] [info] Write & Publish is made by Diederikmc.");
-        this.log.info("[Write & Publish] [info] Thanks to Blindw4lk3r for the code to write books to files and convert them back");
+        writeandpublish.logger.info("[Write & Publish] Write & Publish is enabled!");
+        writeandpublish.logger.info("[Write & Publish] [info] Write & Publish is owned and maintained by Wild1145 and was created by Diederikmc.");
+        writeandpublish.logger.info("[Write & Publish] [info] Thanks to Blindw4lk3r for the code to write books to files and convert them back");
     }
 
     private void createExample(File file, String source)
@@ -128,7 +126,7 @@ public class writeandpublish extends JavaPlugin
     @Override
     public void onDisable()
     {
-        this.log.info("[Write & Publish] Write & Publish is disabled.");
+        writeandpublish.logger.info("[Write & Publish] Write & Publish is disabled.");
     }
 
     public writeandpublishbookwriter getWriter()
