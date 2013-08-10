@@ -17,7 +17,7 @@ import org.bukkit.inventory.meta.BookMeta;
 public class writeandpublishbookwriter
 {
   private writeandpublish plugin;
-  private HashMap<String, ChatColor> colors = new HashMap<String, ChatColor>();
+  private HashMap<String, ChatColor> colors = new HashMap<>();
 
   public writeandpublishbookwriter(writeandpublish instance)
   {
@@ -58,7 +58,7 @@ public class writeandpublishbookwriter
     if (actBook.exists())
     {
       File[] books = bookfolder.listFiles();
-      ArrayList<String> names = new ArrayList<String>();
+      ArrayList<String> names = new ArrayList<>();
       for (File f : books)
       {
         names.add(f.getName());
@@ -72,7 +72,6 @@ public class writeandpublishbookwriter
     try {
       actBook.createNewFile();
     } catch (IOException e) {
-      e.printStackTrace();
     }
 
     BookMeta bm = (BookMeta)pl.getItemInHand().getItemMeta();
@@ -100,6 +99,7 @@ public class writeandpublishbookwriter
   {
     this.plugin.getServer().getScheduler().scheduleSyncDelayedTask(this.plugin, new Runnable()
     {
+      @Override
       public void run() {
         YamlConfiguration bookfile = new YamlConfiguration();
         bookfile.set("author", a);
@@ -112,7 +112,6 @@ public class writeandpublishbookwriter
         try {
           bookfile.save(b);
         } catch (IOException e) {
-          e.printStackTrace();
         }
       }
     });
@@ -120,7 +119,7 @@ public class writeandpublishbookwriter
 
   private BookMeta readFromSystem(BookMeta book, File rb)
   {
-    List<String> lines = new ArrayList<String>();
+    List<String> lines = new ArrayList<>();
     YamlConfiguration saved = new YamlConfiguration();
     try
     {
@@ -147,13 +146,10 @@ public class writeandpublishbookwriter
     }
     catch (InvalidConfigurationException e)
     {
-      e.printStackTrace();
     }
     catch (FileNotFoundException e) {
-      e.printStackTrace();
     }
     catch (IOException e) {
-      e.printStackTrace();
     }
     String[] pages = new String[lines.size()];
     for (int i = 0; i < lines.size(); i++)
@@ -250,8 +246,8 @@ public class writeandpublishbookwriter
   private String remove(String line)
   {
     String temp = line;
-    temp.replaceAll("'", "");
-    temp.replaceAll("\"", "");
+      String replaceAll = temp.replaceAll("'", "");
+      String replaceAll1 = temp.replaceAll("\"", "");
 
     return temp;
   }
