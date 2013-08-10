@@ -19,6 +19,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.mcstats.Metrics;
 
 public class writeandpublish extends JavaPlugin
 {
@@ -30,6 +31,16 @@ public class writeandpublish extends JavaPlugin
     @Override
     public void onEnable()
     {
+        try
+        {
+            Metrics metrics = new Metrics(this);
+            metrics.start();
+        }
+        catch (IOException e)
+        {
+            // Failed to submit the stats :-(
+        }
+        
         this.log = getServer().getLogger();
 
         if (!setupEconomy())
@@ -38,6 +49,7 @@ public class writeandpublish extends JavaPlugin
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
+        
         else
         {
             this.log.info("[Write & Publish] Write & Publish is hooked with Vault, economic functions are enabled.");
