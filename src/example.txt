@@ -1,0 +1,20 @@
+author: Diederikmc
+title: example
+page1: "This book is the official example book of Write & Publish.\n\nWrite and Publish\
+  \ help:\n/listbooks \nto see all buyable books\n/buybook <book> [player]\nto buy\
+  \ a book, optional to buy for other player        more->"
+page2: '/publish <name for book>
+
+  to publish a book
+
+
+  prices are configurable in the config-file
+
+
+  This plugin is made
+
+  by DiederikMC
+
+  All rights reserved.
+
+  have fun with writing, publishing and buying!'

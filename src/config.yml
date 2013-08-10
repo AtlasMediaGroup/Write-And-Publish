@@ -1,0 +1,50 @@
+# ================================================================
+# Write & Publish config file
+# Made by Diederikmc
+# Thanks to Blindw4lk3r for the code to write books to files and convert them back
+# Don't redistribute any of this plugin, all rights are reserved.
+# ================================================================
+#
+#     Prices                  explanation
+# =====================   ======================================================
+#
+publishprice: 20.00        # The price that the publisher pays is for the server
+#
+buyprice: 4.00             # The amount of money that a player has to pay to buy a book, this money gets the author of the book (not the publisher!)
+#
+moneyforauthor: 3.00       # The amount of money that the author of the book gets when a the book is selled
+#
+#
+#               Money circulation, explanation of the configurable prices
+# ================================================================================================
+#
+#    ________                       ___________                           _____________
+#   |        |     buyprice        |           |     moneyfortheauthor   |             |
+#   | buyer  |  -----------------> |  Server   | ----------------------> |   author    |
+#   |________|                     |___________|                         |_____________|
+#                                       /\
+#                                       |
+#                                       |publishprice
+#                                       |
+#                                  _____________
+#                                 |             |
+#                                 | Publisher   |
+#                                 |_____________|
+#
+# =================================================================================================
+#
+#   WARNINGS
+# =======================
+# -> If a cheater publishes a book from somebody else, he won't get money if it is bought so he just loses money for publishing!
+#
+# -> A player could publish a book and buy it infinite times his/herself,
+#    if the buyprice is the same as the moneyforauthor than ervery player has infinite written books for just the publishprice,
+#    don't make the buyprice the same as the moneyforauthor!
+#
+# -> This plugin forms a money-output, money will disappear if there isn't an input!
+#
+# -> You can edit all of this in the configfile, just make sure if it's valid yml
+#
+# -> the configurable settings won't be recreated in this file if you delete them,
+#    to recreate them you will have to delete this file and start/reload the server,
+#    the plugin will recreate a new configfile.

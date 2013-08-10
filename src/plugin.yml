@@ -1,0 +1,43 @@
+name: Write_and_Publish
+main: me.RyanWild.writeandpublish.writeandpublish
+version: 3.0
+author: Diederikmc/ RyanWild/ Wild1145
+depend: [Vault]
+
+#This plugin allows players to publish a book(save it in the server), when a book is published you can buy it for yourself or for an other player.
+#thanks to Blindw4lk3r for the code to write books to files and convert them back
+
+commands:
+  buybook:
+    description: you can buy books for ?
+    permission:
+    usage: /buybook <name of the book> [other player (to give the book to him/her)]
+  listbooks:
+    description: list all published books
+    permission:
+    usage: /listbooks
+  publish:
+    description: publish the book which you are holding
+    permission:
+    usage: /publish <name for book>
+permissions:
+    WandP.*:
+        description: Gives access to all Write & Publish commands
+        children:
+          WandP.buybook.foryourself: true
+          WandP.buybook.other: true
+          WandP.publish: true
+          WandP.listbooks: true
+          WandP.help: true
+    WandP.buybook.foryourself:
+      description: 'permission to buy a book'
+      default: op
+    WandP.buybook.other:
+      description: 'permission to buy a book for an other player'
+      default: op
+    WandP.publish:
+      description: 'permission to publish a writtenbook'
+      default: op
+    WandP.listbooks:
+      description: 'permission to list available books to buy'
+      default: op
