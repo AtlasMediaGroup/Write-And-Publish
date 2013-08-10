@@ -23,7 +23,7 @@ import org.mcstats.Metrics;
 
 public class writeandpublish extends JavaPlugin
 {
-
+    public static final String name = "[Write & Publish] ";
     public static final Logger logger = Logger.getLogger("Minecraft-Server");
     private final writeandpublishbookwriter writer = new writeandpublishbookwriter(this);
     public static Economy econ = null;
@@ -43,20 +43,20 @@ public class writeandpublish extends JavaPlugin
 
         if (!setupEconomy())
         {
-            writeandpublish.logger.severe(String.format("[Write & Publish] - Disabled due to no Vault dependency found!", getDescription().getName()));
+            writeandpublish.logger.severe(String.format((name) + " - Disabled due to no Vault dependency found!", getDescription().getName()));
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
         
         else
         {
-            writeandpublish.logger.info("[Write & Publish] Write & Publish is hooked with Vault, economic functions are enabled.");
+            writeandpublish.logger.info((name) + "  Write & Publish is hooked with Vault, economic functions are enabled.");
         }
 
         File configFile = new File(getDataFolder().getPath() + File.separatorChar + "config.yml");
         if (!configFile.exists())
         {
-            writeandpublish.logger.info("[Write & Publish] There was no config.yml found, it will be created now.");
+            writeandpublish.logger.info((name) + "  There was no config.yml found, it will be created now.");
             saveDefaultConfig();
         }
 
@@ -65,9 +65,9 @@ public class writeandpublish extends JavaPlugin
         {
             createExample(exampleFile, "example.txt");
         }
-        writeandpublish.logger.info("[Write & Publish] Write & Publish is enabled!");
-        writeandpublish.logger.info("[Write & Publish] [info] Write & Publish is owned and maintained by Wild1145 and was created by Diederikmc.");
-        writeandpublish.logger.info("[Write & Publish] [info] Thanks to Blindw4lk3r for the code to write books to files and convert them back");
+        writeandpublish.logger.info((name) + "  Write & Publish is enabled!");
+        writeandpublish.logger.info((name) + "  [info] Write & Publish is owned and maintained by Wild1145 and was created by Diederikmc.");
+        writeandpublish.logger.info((name) + "  [info] Thanks to Blindw4lk3r for the code to write books to files and convert them back");
     }
 
     private void createExample(File file, String source)
@@ -126,7 +126,7 @@ public class writeandpublish extends JavaPlugin
     @Override
     public void onDisable()
     {
-        writeandpublish.logger.info("[Write & Publish] Write & Publish is disabled.");
+        writeandpublish.logger.info((name) + "  Write & Publish is disabled.");
     }
 
     public writeandpublishbookwriter getWriter()
@@ -159,12 +159,12 @@ public class writeandpublish extends JavaPlugin
             {
                 if (player.hasPermission("WandP.listbooks"))
                 {
-                    player.sendMessage(ChatColor.BLUE + "[Write & Publish] Published books: " + ChatColor.YELLOW + getStringList(listBooks()));
+                    player.sendMessage(ChatColor.BLUE + (name) + "  Published books: " + ChatColor.YELLOW + getStringList(listBooks()));
                     return true;
                 }
                 else
                 {
-                    player.sendMessage(ChatColor.RED + "[Write & Publish] You do not have permission to do that.");
+                    player.sendMessage(ChatColor.RED + (name) + "  You do not have permission to do that.");
                     return false;
                 }
             }
@@ -174,23 +174,23 @@ public class writeandpublish extends JavaPlugin
 
                 if (!player.hasPermission("WandP.publish"))
                 {
-                    player.sendMessage(ChatColor.RED + "[Write & Publish] You do not have permission to publish any book.");
+                    player.sendMessage(ChatColor.RED + (name) + "  You do not have permission to publish any book.");
                     return false;
                 }
                 if (args.length < 1)
                 {
-                    sender.sendMessage(ChatColor.RED + "[Write & Publish] No name specified for the book, please try again with a specified name.");
+                    sender.sendMessage(ChatColor.RED + (name) + "  No name specified for the book, please try again with a specified name.");
                     return false;
                 }
                 if (args.length > 1)
                 {
-                    sender.sendMessage(ChatColor.RED + "[Write & Publish] Multiple names are specified for the book, please try again with ONE specified name.");
+                    sender.sendMessage(ChatColor.RED + (name) + "  Multiple names are specified for the book, please try again with ONE specified name.");
                     return false;
                 }
                 String book = args[0];
                 if (bookExists(book))
                 {
-                    player.sendMessage(ChatColor.RED + "[Write & Publish] You used an already existing name, try again with an other name.");
+                    player.sendMessage(ChatColor.RED + (name) + "  You used an already existing name, try again with an other name.");
                     return false;
                 }
                 if (args.length == 1)
@@ -199,7 +199,7 @@ public class writeandpublish extends JavaPlugin
                     EconomyResponse r = econ.withdrawPlayer(player.getName(), publishprice);
                     if (r.transactionSuccess())
                     {
-                        player.sendMessage(ChatColor.BLUE + "[Write & Publish] You published the book succesfully for " + ChatColor.YELLOW + econ.format(publishprice) + " " + econ.currencyNamePlural() + ChatColor.BLUE + ".");
+                        player.sendMessage(ChatColor.BLUE + (name) + "  You published the book succesfully for " + ChatColor.YELLOW + econ.format(publishprice) + " " + econ.currencyNamePlural() + ChatColor.BLUE + ".");
                         getWriter().saveBook(player, args[0]);
                         return true;
                     }
@@ -211,7 +211,7 @@ public class writeandpublish extends JavaPlugin
                 }
                 else
                 {
-                    player.sendMessage(ChatColor.RED + "[Write & Publish] An error occured while saving the book.");
+                    player.sendMessage(ChatColor.RED + (name) + "  An error occured while saving the book.");
                     return false;
                 }
             }
@@ -220,7 +220,7 @@ public class writeandpublish extends JavaPlugin
                 int buyprice = getConfig().getInt("buyprice");
                 if (args.length < 1)
                 {
-                    player.sendMessage(ChatColor.RED + "[Write & Publish] no name is specified for the book, please try again with a specified name.");
+                    player.sendMessage(ChatColor.RED + (name) + "  no name is specified for the book, please try again with a specified name.");
                     return false;
                 }
                 String book = args[0];
@@ -228,12 +228,12 @@ public class writeandpublish extends JavaPlugin
                 {
                     if (args.length > 30)
                     {
-                        player.sendMessage(ChatColor.RED + "[Write & Publish] You used more than 30 args, WOW! ~easter egg~");
+                        player.sendMessage(ChatColor.RED + (name) + "  You used more than 30 args, WOW! ~easter egg~");
                         return false;
                     }
                     if (args.length > 2)
                     {
-                        player.sendMessage(ChatColor.RED + "[Write & Publish] Multiple names are specified for the book or optional player, please try again with ONE specified name.");
+                        player.sendMessage(ChatColor.RED + (name) + "  Multiple names are specified for the book or optional player, please try again with ONE specified name.");
                         return false;
                     }
 
@@ -242,7 +242,7 @@ public class writeandpublish extends JavaPlugin
                     {
                         if (!player.hasPermission("WandP.buybook.foryourself"))
                         {
-                            player.sendMessage(ChatColor.RED + "[Write & Publish] You do not have permission to do that.");
+                            player.sendMessage(ChatColor.RED + (name) + "  You do not have permission to do that.");
                             return false;
                         }
                         else
@@ -252,7 +252,7 @@ public class writeandpublish extends JavaPlugin
                             if (r.transactionSuccess())
                             {
                                 paytheauthor(bookbook, args[0], player.getName());
-                                player.sendMessage(ChatColor.BLUE + "[Write & Publish] You bought the book: " + ChatColor.YELLOW + args[0] + ChatColor.BLUE + " for " + ChatColor.YELLOW + econ.format(buyprice) + " " + econ.currencyNamePlural() + ChatColor.BLUE + ".");
+                                player.sendMessage(ChatColor.BLUE + (name) + "  You bought the book: " + ChatColor.YELLOW + args[0] + ChatColor.BLUE + " for " + ChatColor.YELLOW + econ.format(buyprice) + " " + econ.currencyNamePlural() + ChatColor.BLUE + ".");
                                 getWriter().giveBook(player, args[0]);
                                 return true;
                             }
@@ -267,13 +267,13 @@ public class writeandpublish extends JavaPlugin
                     {
                         if (!player.hasPermission("WandP.buybook.other"))
                         {
-                            player.sendMessage(ChatColor.RED + "[Write & Publish] You do not have permission to do that.");
+                            player.sendMessage(ChatColor.RED + (name) + "  You do not have permission to do that.");
                             return false;
                         }
                         Player pla = getServer().getPlayer(args[1]);
                         if (pla == null)
                         {
-                            player.sendMessage(ChatColor.RED + "[Write & Publish] There is no Player with that name " + ChatColor.YELLOW + args[1] + ChatColor.RED + " online.");
+                            player.sendMessage(ChatColor.RED + (name) + "  There is no Player with that name " + ChatColor.YELLOW + args[1] + ChatColor.RED + " online.");
                             return false;
                         }
                         else
@@ -283,8 +283,8 @@ public class writeandpublish extends JavaPlugin
                             if (r.transactionSuccess())
                             {
                                 paytheauthor(bookbook, args[0], player.getName());
-                                player.sendMessage(ChatColor.BLUE + "[Write & Publish] You bought the book: " + ChatColor.YELLOW + args[0] + ChatColor.BLUE + " for " + ChatColor.YELLOW + econ.format(buyprice) + " " + econ.currencyNamePlural() + ChatColor.BLUE + " for the player " + ChatColor.YELLOW + pla.getName() + ChatColor.BLUE + ".");
-                                pla.sendMessage(ChatColor.BLUE + "[Write & Publish] You received the book: " + ChatColor.YELLOW + args[0] + ChatColor.BLUE + " from the player " + ChatColor.YELLOW + player.getName() + ChatColor.BLUE + ".");
+                                player.sendMessage(ChatColor.BLUE + (name) + "  You bought the book: " + ChatColor.YELLOW + args[0] + ChatColor.BLUE + " for " + ChatColor.YELLOW + econ.format(buyprice) + " " + econ.currencyNamePlural() + ChatColor.BLUE + " for the player " + ChatColor.YELLOW + pla.getName() + ChatColor.BLUE + ".");
+                                pla.sendMessage(ChatColor.BLUE + (name) + "  You received the book: " + ChatColor.YELLOW + args[0] + ChatColor.BLUE + " from the player " + ChatColor.YELLOW + player.getName() + ChatColor.BLUE + ".");
                                 getWriter().giveBook(pla, args[0]);
                                 return true;
                             }
@@ -297,20 +297,20 @@ public class writeandpublish extends JavaPlugin
                     }
                     else
                     {
-                        player.sendMessage(ChatColor.RED + "[Write & Publish] No name specified for the book, please try again with a specified name.");
+                        player.sendMessage(ChatColor.RED + (name) + "  No name specified for the book, please try again with a specified name.");
                         return false;
                     }
                 }
                 else
                 {
-                    player.sendMessage(ChatColor.RED + "[Write & Publish] There is no book with the name: '" + ChatColor.YELLOW + book + ChatColor.RED + "' published!");
+                    player.sendMessage(ChatColor.RED + (name) + "  There is no book with the name: '" + ChatColor.YELLOW + book + ChatColor.RED + "' published!");
                     return false;
                 }
             }
         }
         else
         {
-            sender.sendMessage(ChatColor.RED + "[Write & Publish] You must be a player to buy books!");
+            sender.sendMessage(ChatColor.RED + (name) + "  You must be a player to buy books!");
             return false;
         }
         return false;
@@ -367,7 +367,7 @@ public class writeandpublish extends JavaPlugin
             int price = getConfig().getInt("moneyforauthor");
             econ.depositPlayer(temp, price);
             Player p = Bukkit.getServer().getPlayer(temp);
-            p.sendMessage(ChatColor.BLUE + "[Write & Publish] You got " + ChatColor.YELLOW + econ.format(price) + " " + econ.currencyNamePlural() + ChatColor.BLUE + " because " + ChatColor.YELLOW + buyer + ChatColor.BLUE + " bought your book: " + ChatColor.YELLOW + bookname + ChatColor.BLUE + "!");
+            p.sendMessage(ChatColor.BLUE + (name) + "  You got " + ChatColor.YELLOW + econ.format(price) + " " + econ.currencyNamePlural() + ChatColor.BLUE + " because " + ChatColor.YELLOW + buyer + ChatColor.BLUE + " bought your book: " + ChatColor.YELLOW + bookname + ChatColor.BLUE + "!");
         }
         catch (InvalidConfigurationException e)
         {
