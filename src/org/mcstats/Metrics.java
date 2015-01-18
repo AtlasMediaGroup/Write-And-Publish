@@ -61,46 +61,57 @@ public class Metrics
      * The current revision number
      */
     private final static int REVISION = 7;
+
     /**
      * The base url of the metrics domain
      */
     private static final String BASE_URL = "http://report.mcstats.org";
+
     /**
      * The url used to report a server's status
      */
     private static final String REPORT_URL = "/plugin/%s";
+
     /**
      * Interval of time to ping (in minutes)
      */
     private static final int PING_INTERVAL = 15;
+
     /**
      * The plugin this metrics submits for
      */
     private final Plugin plugin;
+
     /**
      * All of the custom graphs to submit to metrics
      */
     private final Set<Graph> graphs = Collections.synchronizedSet(new HashSet<Graph>());
+
     /**
      * The plugin configuration file
      */
     private final YamlConfiguration configuration;
+
     /**
      * The plugin configuration file
      */
     private final File configurationFile;
+
     /**
      * Unique server id
      */
     private final String guid;
+
     /**
      * Debug mode
      */
     private final boolean debug;
+
     /**
      * Lock for synchronization
      */
     private final Object optOutLock = new Object();
+
     /**
      * The scheduled task
      */
@@ -204,46 +215,47 @@ public class Metrics
 
             // Begin hitting the server with glorious data
             task = plugin.getServer().getScheduler().runTaskTimerAsynchronously(plugin, new Runnable()
-            {
-                private boolean firstPost = true;
+                                                                        {
 
-                public void run()
-                {
-                    try
-                    {
-                        // This has to be synchronized or it can collide with the disable method.
-                        synchronized (optOutLock)
-                        {
-                            // Disable Task, if it is running and the server owner decided to opt-out
-                            if (isOptOut() && task != null)
-                            {
-                                task.cancel();
-                                task = null;
-                                // Tell all plotters to stop gathering information.
-                                for (Graph graph : graphs)
-                                {
-                                    graph.onOptOut();
-                                }
-                            }
-                        }
+                                                                            private boolean firstPost = true;
+
+                                                                            public void run()
+                                                                            {
+                                                                                try
+                                                                                {
+                                                                                    // This has to be synchronized or it can collide with the disable method.
+                                                                                    synchronized (optOutLock)
+                                                                                    {
+                                                                                        // Disable Task, if it is running and the server owner decided to opt-out
+                                                                                        if (isOptOut() && task != null)
+                                                                                        {
+                                                                                            task.cancel();
+                                                                                            task = null;
+                                                                                            // Tell all plotters to stop gathering information.
+                                                                                            for (Graph graph : graphs)
+                                                                                            {
+                                                                                                graph.onOptOut();
+                                                                                            }
+                                                                                        }
+                                                                                    }
 
                         // We use the inverse of firstPost because if it is the first time we are posting,
-                        // it is not a interval ping, so it evaluates to FALSE
-                        // Each time thereafter it will evaluate to TRUE, i.e PING!
-                        postPlugin(!firstPost);
+                                                                                    // it is not a interval ping, so it evaluates to FALSE
+                                                                                    // Each time thereafter it will evaluate to TRUE, i.e PING!
+                                                                                    postPlugin(!firstPost);
 
                         // After the first post we set firstPost to false
-                        // Each post thereafter will be a ping
-                        firstPost = false;
-                    }
-                    catch (IOException e)
-                    {
-                        if (debug)
-                        {
-                            Bukkit.getLogger().log(Level.INFO, "[Metrics] " + e.getMessage());
-                        }
-                    }
-                }
+                                                                                    // Each post thereafter will be a ping
+                                                                                    firstPost = false;
+                                                                                }
+                                                                                catch (IOException e)
+                                                                                {
+                                                                                    if (debug)
+                                                                                    {
+                                                                                        Bukkit.getLogger().log(Level.INFO, "[Metrics] " + e.getMessage());
+                                                                                    }
+                                                                                }
+                                                                            }
             }, 0, PING_INTERVAL * 1200);
 
             return true;
@@ -367,10 +379,9 @@ public class Metrics
         boolean onlineMode = Bukkit.getServer().getOnlineMode(); // TRUE if online mode is enabled
         String pluginVersion = description.getVersion();
         String serverVersion = Bukkit.getVersion();
-        int playersOnline = Bukkit.getServer().getOnlinePlayers().length;
+        int playersOnline = Bukkit.getServer().getOnlinePlayers().size();
 
         // END server software specific section -- all code below does not use any code outside of this class / Java
-
         // Construct the post data
         StringBuilder json = new StringBuilder(1024);
         json.append('{');
@@ -471,7 +482,6 @@ public class Metrics
         {
             connection = url.openConnection();
         }
-
 
         byte[] uncompressed = json.toString().getBytes();
         byte[] compressed = gzip(json.toString());
@@ -713,6 +723,7 @@ public class Metrics
          * comply to the above when submitted, it is rejected
          */
         private final String name;
+
         /**
          * The set of plotters that are contained within this graph
          */
